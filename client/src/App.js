@@ -13,7 +13,9 @@ function App() {
 
     const fetchTasks = async () => {
         try {
-            const response = await axios.get("http://localhost:5001/api/tasks");
+            const response = await axios.get(
+                process.env.REACT_APP_API_URL + "/api/tasks"
+            );
             setTasks(response.data);
         } catch (error) {
             console.error("Error fetching tasks:", error);
@@ -23,7 +25,7 @@ function App() {
     const addTask = async (task) => {
         try {
             const response = await axios.post(
-                "http://localhost:5001/api/tasks",
+                process.env.REACT_APP_API_URL + "/api/tasks",
                 task
             );
             setTasks([...tasks, response.data]);
@@ -34,7 +36,9 @@ function App() {
 
     const deleteTask = async (id) => {
         try {
-            await axios.delete(`http://localhost:5001/api/tasks/${id}`);
+            await axios.delete(
+                process.env.REACT_APP_API_URL + `/api/tasks/${id}`
+            );
             setTasks(tasks.filter((task) => task._id !== id));
         } catch (error) {
             console.error("Error deleting task:", error);
@@ -44,7 +48,7 @@ function App() {
     const toggleComplete = async (task) => {
         try {
             const response = await axios.put(
-                `http://localhost:5001/api/tasks/${task._id}`,
+                process.env.REACT_APP_API_URL + `/api/tasks/${task._id}`,
                 {
                     ...task,
                     completed: !task.completed,
